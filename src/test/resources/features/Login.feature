@@ -1,4 +1,4 @@
-@smoke @lib-100 @login
+@smoke @lib-100 @login @regression
 Feature: Login
   As an user,
   I should be able to login to the application

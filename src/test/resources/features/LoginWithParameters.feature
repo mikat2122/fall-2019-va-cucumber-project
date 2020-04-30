@@ -1,3 +1,4 @@
+@regression
 Feature: Login with parameters
 
 
@@ -14,12 +15,12 @@ Feature: Login with parameters
     When I enter username "librarian12@library"
     And I enter password "AOYKYTMJ"
     And click the sign in button
-    Then dashboard should  be displayed
+    Then dashboard should be displayed
     And there should be 23 users
 
 
   Scenario: Login as librarian same line
     Given I am on the login page
     When I login using "librarian12@library" and "AOYKYTMJ"
-    Then dashboard should  be displayed
+    Then dashboard should be displayed
     And there should be 23 "users"

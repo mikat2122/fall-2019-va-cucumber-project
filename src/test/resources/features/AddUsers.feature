@@ -1,4 +1,4 @@
-@show_records @smoke @lib-7031
+@show_records @smoke @lib-7031 @regression
 Feature: Add Users window
 
   Background:
