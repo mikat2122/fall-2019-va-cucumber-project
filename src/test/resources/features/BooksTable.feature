@@ -8,7 +8,7 @@ Feature: Books Table
     And I search for "The Goldfinch"
     Then search table should contain results matching The Goldfinch
 
-  @wip
+
   Scenario: Verify search result
     Given I am on the login page
     And I login to application as a librarian

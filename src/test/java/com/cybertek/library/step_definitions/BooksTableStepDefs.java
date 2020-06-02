@@ -3,6 +3,7 @@ package com.cybertek.library.step_definitions;
 import com.cybertek.library.pages.BooksPage;
 import com.cybertek.library.pojos.Book;
 import com.cybertek.library.utilities.BrowserUtils;
+import com.cybertek.library.utilities.DBUtils;
 import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -30,7 +31,7 @@ public class BooksTableStepDefs {
       assertTrue(book + "was not found in books table", found);
     }
 
-    @When("I edit book {}")
+    @When("I open/edit book {}")
     public void i_edit_book_The_kiterunner(String book) {
         System.out.println("book = " + book);
         BrowserUtils.waitForClickability(booksPage.search, 5).sendKeys(book);
@@ -57,5 +58,38 @@ public class BooksTableStepDefs {
                 book.getAuthor(), booksPage.author.getAttribute("value"));
         assertEquals("Book year did not match",
                 book.getYear(), booksPage.year.getAttribute("value"));
+    }
+
+
+    @Then("book information must match the database for {}")
+    public void book_information_must_match_the_database_for_The_kite_runner(String book) {
+        String aName = booksPage.bookName.getAttribute("value");
+        String aAuthor = booksPage.author.getAttribute("value");
+        String aYear = booksPage.year.getAttribute("value");
+        String aIsbn = booksPage.isbn.getAttribute("value");
+        String aCategory = booksPage.categoryList().getFirstSelectedOption().getText();
+        String aDescription = booksPage.description.getAttribute("value");
+
+        // get the book info from database
+        String sql = "SELECT b.name, b.isbn, b.year, b.author, bc.name, b.description\n" +
+                "FROM books b\n" +
+                "JOIN book_categories bc\n" +
+                "ON b.book_category_id = bc.id\n" +
+                "WHERE b.name = '" + book + "';";
+        System.out.println(sql);
+
+        Map<String, Object>  dbData = DBUtils.getRowMap(sql);
+
+        String eAuthor = dbData.get("author").toString();
+        String eYear = dbData.get("year").toString();
+        String eIsbn = dbData.get("isbn").toString();
+        String eDescription = dbData.get("description").toString();
+        String eCat = dbData.get("name").toString();
+
+        assertEquals("author did not match", eAuthor, aAuthor);
+        assertEquals("year did not match", eYear, aYear);
+        assertEquals("isbn did not match", eIsbn, aIsbn);
+        assertEquals("desctiption did not match", eDescription, aDescription);
+        assertEquals("category did not match", eCat, aCategory);
     }
 }

@@ -9,7 +9,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Driver {
 
@@ -29,6 +33,24 @@ public class Driver {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
                     driverPool.set(new ChromeDriver());
+                    break;
+                case "remote-chrome":
+                    try{
+                        ChromeOptions chromeOptions = new ChromeOptions();
+                        URL url = new URL("http://54.165.116.76:4444/wd/hub");
+                        driverPool.set(new RemoteWebDriver(url, chromeOptions));
+                    } catch(MalformedURLException e){
+                        e.printStackTrace();
+                    }
+                    break;
+                case "remote-firefox":
+                    try{
+                        FirefoxOptions firefoxOptions = new FirefoxOptions();
+                        URL url = new URL("http://54.165.116.76:4444/wd/hub");
+                        driverPool.set(new RemoteWebDriver(url, firefoxOptions));
+                    } catch(MalformedURLException e){
+                        e.printStackTrace();
+                    }
                     break;
                 case "chrome-headless":
                     WebDriverManager.chromedriver().setup();
