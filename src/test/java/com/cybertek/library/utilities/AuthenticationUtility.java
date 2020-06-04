@@ -4,7 +4,7 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class AutenticationUtility {
+public class AuthenticationUtility {
     public static String getLibrarianToken() {
         String username = ConfigurationReader.getProperty("librarian_email");
         String password = ConfigurationReader.getProperty("librarian_password");
@@ -12,6 +12,7 @@ public class AutenticationUtility {
         Response response = given().
                 formParam("email", username).
                 formParam("password", password).
+                log().all().
                 when().
                 post("login").prettyPeek();
         response.then().statusCode(200);

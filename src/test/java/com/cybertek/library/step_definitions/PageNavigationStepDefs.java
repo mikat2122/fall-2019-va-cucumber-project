@@ -34,8 +34,9 @@ public class PageNavigationStepDefs {
     }
     @Then("{string} page should be displayed")
     public void page_should_be_displayed(String page) {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().endsWith(page.toLowerCase()));
         BrowserUtils.wait(2);
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().endsWith(page.toLowerCase()));
+
         switch (page.toLowerCase()){
             case "users":
                 String actual = dashboardPage.pageHeader.getText();

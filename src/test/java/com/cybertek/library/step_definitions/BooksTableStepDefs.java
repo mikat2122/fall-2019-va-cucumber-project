@@ -34,8 +34,8 @@ public class BooksTableStepDefs {
     @When("I open/edit book {}")
     public void i_edit_book_The_kiterunner(String book) {
         System.out.println("book = " + book);
-        BrowserUtils.waitForClickability(booksPage.search, 5).sendKeys(book);
-        BrowserUtils.waitForClickability(booksPage.editBook(book), 5).click();
+        BrowserUtils.waitForClickability(booksPage.search, 10).sendKeys(book);
+        BrowserUtils.waitForClickability(booksPage.editBook(book), 10).click();
     }
 
     // register a data table type that uses a custom class

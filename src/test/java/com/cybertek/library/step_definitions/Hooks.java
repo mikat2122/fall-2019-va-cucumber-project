@@ -4,6 +4,7 @@ import com.cybertek.library.utilities.ConfigurationReader;
 import com.cybertek.library.utilities.DBUtils;
 import com.cybertek.library.utilities.Driver;
 import io.cucumber.java.*;
+import io.restassured.RestAssured;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
@@ -16,6 +17,7 @@ public class Hooks {
         System.out.println("set up browser");
         Driver.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         // Driver.getDriver().manage().window().maximize();
+        RestAssured.baseURI = ConfigurationReader.getProperty("qa2_base_url");
     }
 
     @Before(value = "@db", order = 1)
